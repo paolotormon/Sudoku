@@ -10,6 +10,7 @@
 
 # production
 /build
+/stash
 # .env
 
 # misc

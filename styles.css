@@ -11,3 +11,6 @@
   border-spacing: 1px;
   border: 1px grey solid;
 }
+.odd-section {
+  background-color: lightgray;
+}

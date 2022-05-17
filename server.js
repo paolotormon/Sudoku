@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  response.send("<h1>Hello World!</h1>");
+  res.send("<h1>Hello World!</h1>");
 });
 
 app.post("/solve", async (req, res) => {

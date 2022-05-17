@@ -8,7 +8,7 @@
     "start:backend": "nodemon server.js",
     "deploy:github": "git push",
     "deploy:heroku": "git push heroku master",
-    "deploy:full": "git add . && git commit -m build && npm run deploy",
+    "deploy:full": "git add . && git commit -m build && npm run deploy:heroku",
     "test": "echo \"Error: no test specified\" && exit 1",
     "logs:prod": "heroku logs --tail"
   },

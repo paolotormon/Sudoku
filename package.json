@@ -2,10 +2,11 @@
   "name": "sudoku-solver",
   "version": "1.0.0",
   "description": "Sudoku Solver",
-  "main": "app.js",
+  "main": "index.html",
   "scripts": {
     "start": "node index.js",
     "start:backend": "nodemon server.js",
+    "deploy": "git push heroku master",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

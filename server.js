@@ -11,7 +11,6 @@ app.use(express.json());
 app.post("/solve", async (req, res) => {
   try {
     const sudokuData = { input: req.body };
-
     const options = {
       method: "POST",
       url: "https://sudoku-solver3.p.rapidapi.com/sudokusolver/",
@@ -22,12 +21,12 @@ app.post("/solve", async (req, res) => {
       },
       data: JSON.stringify(sudokuData),
     };
-
     const axiosResponse = await axios.request(options);
     const answer = axiosResponse.data.answer;
     res.json(answer);
   } catch (e) {
-    console.log(e.message);
+    console.log(e);
+    res.status(400).json("");
   }
 });
 app.listen(PORT, () => console.log(`listening to PORT ${PORT}`));

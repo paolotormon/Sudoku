@@ -7,7 +7,7 @@ const sudokuCells = []; //new Array(81).fill(0);
 
 const addShade = (i) => {
   //corners
-  if (
+  return (
     ((i % 9 == 0 ||
       i % 9 == 1 ||
       i % 9 == 2 ||
@@ -17,11 +17,7 @@ const addShade = (i) => {
       (i < 27 || i > 53)) ||
     //center
     ((i % 9 == 3 || i % 9 == 4 || i % 9 == 5) && i > 27 && i < 53)
-  ) {
-    return true;
-  } else {
-    return false;
-  }
+  );
 };
 for (let i = 0; i < numberOfCells; i++) {
   const inputElement = document.createElement("input");
@@ -40,15 +36,15 @@ const getBoardInputs = () => {
   const inputs = document.querySelectorAll("input");
   for (const input of inputs) {
     const cellInput = input.value;
-    if (cellInput) {
+    if (!cellInput) {
+      sudokuCells.push(0);
+    } else {
       if (cellInput > 9 || cellInput < 1) {
         const e = new Error();
-        e.customMessage = "Invalid Input! Values should be 1-9 only";
+        e.customMessage = "Values should be 1-9 only!";
         throw e;
       }
       sudokuCells.push(Number(cellInput));
-    } else {
-      sudokuCells.push(0);
     }
   }
 };
@@ -58,22 +54,26 @@ const populateCells = (arr) => {
   for (const i in sudokuInput) {
     sudokuInput[i].value = arr[i];
   }
-  solutionDisplay.innerHTML = "This is the answer!";
 };
 
 const solve = async () => {
   solutionDisplay.innerHTML = "Loading.......";
-  getBoardInputs();
   try {
+    getBoardInputs();
     const res = await fetch("http://localhost:8000/solve", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(sudokuCells),
+      headers: { "Content-Type": "application/json" },
     });
     const data = await res.json();
+    if (!res.ok) {
+      throw new Error("Invalid input!");
+    }
     populateCells(data);
+    solutionDisplay.innerHTML = "Answer successfully generated!";
   } catch (e) {
     console.log(e);
+    solutionDisplay.innerHTML = "Error: " + (e.customMessage || e.message);
   }
 };
 

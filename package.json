@@ -4,6 +4,7 @@
   "description": "Sudoku Solver",
   "main": "app.js",
   "scripts": {
+    "start": "node index.js",
     "start:backend": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

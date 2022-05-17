@@ -7,6 +7,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  response.send("<h1>Hello World!</h1>");
+});
+
 app.post("/solve", async (req, res) => {
   try {
     const sudokuData = { input: req.body };

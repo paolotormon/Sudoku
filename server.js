@@ -1,4 +1,3 @@
-const PORT = 8000;
 const axios = require("axios");
 const express = require("express");
 const cors = require("cors");
@@ -29,4 +28,6 @@ app.post("/solve", async (req, res) => {
     res.status(400).json("");
   }
 });
+
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => console.log(`listening to PORT ${PORT}`));

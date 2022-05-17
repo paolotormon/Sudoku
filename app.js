@@ -53,36 +53,27 @@ const getBoardInputs = () => {
   }
 };
 
-const populateCells = (res) => {
+const populateCells = (arr) => {
   const sudokuInput = document.querySelectorAll("input");
   for (const i in sudokuInput) {
-    sudokuInput[i].value = res[i];
+    sudokuInput[i].value = arr[i];
   }
   solutionDisplay.innerHTML = "This is the answer!";
 };
 
 const solve = async () => {
   solutionDisplay.innerHTML = "Loading.......";
+  getBoardInputs();
   try {
-    getBoardInputs();
-    const sudokuInputs = { input: sudokuCells };
-    const options = {
+    const res = await fetch("http://localhost:8000/solve", {
       method: "POST",
-      url: "https://sudoku-solver3.p.rapidapi.com/sudokusolver/",
-      headers: {
-        "content-type": "application/json",
-        "X-RapidAPI-Host": "sudoku-solver3.p.rapidapi.com",
-        "X-RapidAPI-Key": "ee0cec9a63msh700b12d677a683fp150182jsn58290878f60c",
-      },
-      data: JSON.stringify(sudokuInputs),
-    };
-
-    const res = await axios.request(options);
-    const { data } = res;
-    populateCells(data.answer);
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(sudokuCells),
+    });
+    const data = await res.json();
+    populateCells(data);
   } catch (e) {
-    console.log(e.message);
-    solutionDisplay.innerHTML = e.customMessage || "Error!";
+    console.log(e);
   }
 };
 

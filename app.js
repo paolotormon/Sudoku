@@ -1,7 +1,7 @@
 const puzzleBoard = document.querySelector("#puzzle");
 const solveButton = document.querySelector("#solve-button");
 const squares = 81;
-const submission = []; //new Array(81).fill(0);
+const sudokuCells = []; //new Array(81).fill(0);
 
 for (let i = 0; i < squares; i++) {
   const inputElement = document.createElement("input");
@@ -11,18 +11,23 @@ for (let i = 0; i < squares; i++) {
   puzzleBoard.appendChild(inputElement);
 }
 
-const joinValues = () => {
-  submission.splice(0, submission.length); //clear
+const getBoardInputs = () => {
+  sudokuCells.splice(0, sudokuCells.length); //clear
   const inputs = document.querySelectorAll("input");
   for (const input of inputs) {
-    input.value ? submission.push(Number(input.value)) : submission.push(0);
+    input.value ? sudokuCells.push(Number(input.value)) : sudokuCells.push(0);
   }
   solve();
 };
+const populateValues = (res) => {
+  const sudokuInput = document.querySelectorAll("input");
+  for (const i in sudokuInput) {
+    sudokuInput[i].value = res[i];
+  }
+};
 
 const solve = async () => {
-  const sudokuInput = JSON.stringify({ input: submission });
-  console.log(sudokuInput);
+  const sudokuInputs = { input: sudokuCells };
   const options = {
     method: "POST",
     url: "https://sudoku-solver3.p.rapidapi.com/sudokusolver/",
@@ -31,17 +36,22 @@ const solve = async () => {
       "X-RapidAPI-Host": "sudoku-solver3.p.rapidapi.com",
       "X-RapidAPI-Key": "ee0cec9a63msh700b12d677a683fp150182jsn58290878f60c",
     },
-    data: sudokuInput,
+    data: JSON.stringify(sudokuInputs),
+    // Error Sample---
+    // data: '{"input":[1,1,1,1,0,0,4,0,0,0,0,5,6,0,0,0,0,0,3,0,0,7,0,0,6,0,9,5,0,0,0,0,4,0,2,0,0,0,0,0,0,0,0,6,5,0,0,2,0,0,1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,8,9,0,0,0,7,0,4,0,0,2,0,0]}',
+    //  Working Sample---
     // data: '{"input":[0,0,8,9,0,0,4,0,0,0,0,5,6,0,0,0,0,0,3,0,0,7,0,0,6,0,9,5,0,0,0,0,4,0,2,0,0,0,0,0,0,0,0,6,5,0,0,2,0,0,1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,8,9,0,0,0,7,0,4,0,0,2,0,0]}',
   };
 
   try {
     const res = await axios.request(options);
+    console.log("res", res);
     const { data } = res;
     console.log("solved", data);
+    populateValues(data.answer);
   } catch (e) {
-    console.error(error);
+    console.log(e);
   }
 };
 
-solveButton.addEventListener("click", joinValues);
+solveButton.addEventListener("click", getBoardInputs);

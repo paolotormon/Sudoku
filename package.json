@@ -1,0 +1,19 @@
+{
+  "name": "sudoku-solver",
+  "version": "1.0.0",
+  "description": "Sudoku Solver",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paolotormon/Sudoku.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/paolotormon/Sudoku/issues"
+  },
+  "homepage": "https://github.com/paolotormon/Sudoku#readme"
+}

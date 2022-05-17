@@ -1,0 +1,13 @@
+* {
+  box-sizing: border-box;
+}
+#puzzle {
+  width: 450px;
+  aspect-ratio: 1;
+}
+#puzzle input {
+  width: 50px;
+  aspect-ratio: 1;
+  border-spacing: 1px;
+  border: 1px grey solid;
+}

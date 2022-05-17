@@ -30,6 +30,7 @@ app.post("/solve", async (req, res) => {
   } catch (e) {
     console.log(e);
     res.status(400).json("");
+    // response.status(404).send({ error: "unknown endpoint" });
   }
 });
 

@@ -5,11 +5,33 @@ const solutionDisplay = document.querySelector("#result-display");
 const numberOfCells = 81;
 const sudokuCells = []; //new Array(81).fill(0);
 
+const addShade = (i) => {
+  //corners
+  if (
+    ((i % 9 == 0 ||
+      i % 9 == 1 ||
+      i % 9 == 2 ||
+      i % 9 == 6 ||
+      i % 9 == 7 ||
+      i % 9 == 8) &&
+      (i < 27 || i > 53)) ||
+    //center
+    ((i % 9 == 3 || i % 9 == 4 || i % 9 == 5) && i > 27 && i < 53)
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+};
 for (let i = 0; i < numberOfCells; i++) {
   const inputElement = document.createElement("input");
   inputElement.setAttribute("type", "number");
   inputElement.setAttribute("min", 1);
   inputElement.setAttribute("max", 9);
+
+  if (addShade(i)) {
+    inputElement.classList.add("odd-section");
+  }
   puzzleBoard.appendChild(inputElement);
 }
 
@@ -56,13 +78,11 @@ const solve = async () => {
     };
 
     const res = await axios.request(options);
-    console.log(res);
     const { data } = res;
-    console.log(data.answer);
     populateCells(data.answer);
   } catch (e) {
-    console.log(e);
-    solutionDisplay.innerHTML = e.customMessage || "This is not solvable!";
+    console.log(e.message);
+    solutionDisplay.innerHTML = e.customMessage || "Error!";
   }
 };
 

@@ -60,7 +60,8 @@ const solve = async () => {
   solutionDisplay.innerHTML = "Loading.......";
   try {
     getBoardInputs();
-    const res = await fetch("http://localhost:8000/solve", {
+    // fetch("http://localhost:8000/solve"
+    const res = await fetch("https://ancient-woodland-73413.herokuapp.com/solve", {
       method: "POST",
       body: JSON.stringify(sudokuCells),
       headers: { "Content-Type": "application/json" },

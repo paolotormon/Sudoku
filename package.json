@@ -6,9 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "start:backend": "nodemon server.js",
-    "deploy:github": "git push",
-    "deploy:heroku": "git push heroku master",
-    "deploy:full": "git add . && git commit -m build && npm run deploy:heroku",
+    "push:github": "rm -rf .env && git add . && git commit -m update && git push",
+    "deploy:full": "rm -rf .env && cp ./stash/.env ./ && git add . && git commit -m deploy && git push heroku master",
     "test": "echo \"Error: no test specified\" && exit 1",
     "logs:prod": "heroku logs --tail"
   },
